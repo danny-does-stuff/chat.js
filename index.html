@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
       * {
       	margin: 0;
@@ -60,6 +61,32 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
+    $(document).ready(function()
+    {
+      $("#chatRoomTab").click(function()
+      {
+          if($("#chatRoomTab").hasClass("active")) {return;}
+          else{
+              $("#chatRoomTab").addClass("active");
+              $("#chatBotTab").removeClass("active");
+              $("#chatRoomDiv").css("display","block");
+              $("#chatBotDiv").css("display","none");
+          }
+      });
+
+      $("#chatBotTab").click(function()
+      {
+          if($("#chatBotTab").hasClass("active")) {return;}
+          else{
+              $("#chatBotTab").addClass("active");
+              $("#chatRoomTab").removeClass("active");
+              $("#chatBotDiv").css("display","block");
+              $("#chatRoomDiv").css("display","none");
+          }
+      });
+    });
+  </script>
+  <script>
     $(function () {
       var socket = io();
       var username = localStorage['username'] ? localStorage['username'] : prompt('What name would you like to display?');
@@ -88,7 +115,16 @@
     });
   </script>
   <body>
-    <ul id="messages"></ul>
+    <ul class="nav nav-tabs">
+      <li role="presentation" class="active" id="chatRoomTab"><a href="#">Chat Room</a></li>
+      <li role="presentation" id="chatBotTab"><a href="#">chatBot</a></li>
+    </ul>
+    <div id="chatRoomDiv">
+      <ul id="messages"></ul>
+    </div>
+    <div id="botDiv">
+      <ul id="botMessages"></ul>
+    </div>
     <form action="">
       <input id="message-text" autocomplete="off" /><button>Send</button>
     </form>
